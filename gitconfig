@@ -1,0 +1,12 @@
+[user]
+	email = andi.bachmann@geo.uzh.ch
+	name = Andi Bachmann
+[push]
+	default = simple
+[alias]
+  stat = status
+  st = status
+  ci = commit
+  co = checkout
+  br = branch
+
