@@ -1,32 +1,22 @@
-;;; the load path for modes
-;;(setq load-path (cons "/home/bachmann/elisp" load-path))
-(setq load-path (append (list (expand-file-name "~/elisp")) load-path))
-
-;; set the properties of the 'initial frame'
-;; set the default properties for frames
-;; (this file is read __AFTER__ the initial frame has been loaded!!)
-;;(setq default-frame-alist
-;;      '((width . 80) (height . 50)))
-;;(setq initial-frame-alist
-;;      '((width . 80) (height . 50)))
-;; (setq default-frame-alist
-;;      '((foreground-color . "white")
-;;        (background-color . "black")))
-
-;;; make sure 'AucTeX' is loaded...
-(load "auctex.el" nil t t)
-(load "preview-latex.el" nil t t)
-
-(load "slim-mode.el" nil t t)
-;;; inhibit anoying splash screen
-(setq inhibit-splash-screen t)
-
 ;;
+
+;; for further customizations have a look at this:
+;; * http://www.aaronbedra.com/emacs.d/
+;;
+
+;; Emacs (>24) Package Repositories
+;; Package Repos
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")
+                         ("melpa" . "http://melpa.milkbox.net/packages/")))
+;; just for convenience
+(add-to-list 'auto-mode-alist '("emacs" . emacs-lisp-mode))
+
 ;; coffee-mode
 ;; 
 ;; Details found here:  http://ozmm.org/posts/coffee_mode.html
-(add-to-list 'load-path "~/.elisp/coffee-mode")
-(require 'coffee-mode)
+;; (add-to-list 'load-path "~/.elisp/coffee-mode")
+;; (require 'coffee-mode)
 (add-to-list 'auto-mode-alist '("\\.coffee$" . coffee-mode))
 (add-to-list 'auto-mode-alist '("Cakefile" . coffee-mode))
 
@@ -131,6 +121,7 @@
  '(column-number-mode t)
  '(current-language-environment "UTF-8")
  '(default-input-method "latin-1-postfix")
+ '(font-use-system-font t)
  '(fringe-mode (quote (nil . 0)) nil (fringe))
  '(graphviz-dot-indent-width 2)
  '(graphviz-dot-view-command "dotty %s")
@@ -139,6 +130,7 @@
  '(icicle-reminder-prompt-flag 6)
  '(indicate-buffer-boundaries (quote left))
  '(indicate-empty-lines t)
+ '(inhibit-startup-screen t)
  '(js-indent-level 2)
  '(ruby-deep-arglist nil)
  '(ruby-deep-indent-paren nil)
@@ -162,7 +154,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "black" :foreground "white" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 98 :width semi-condensed :foundry "Misc" :family "Fixed"))))
+ '(default ((t (:inherit nil :stipple nil :background "black" :foreground "white" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 98 :width normal :foundry "bitstream" :family "Courier 10 Pitch"))))
  '(cursor ((t (:background "dim gray"))))
  '(font-lock-builtin-face ((t (:foreground "#F8F8F8"))))
  '(font-lock-comment-face ((t (:italic t :foreground "#AEAEAE"))))
