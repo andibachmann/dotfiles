@@ -1,0 +1,20 @@
+#
+#
+
+# customize your environment here
+#---------------------------------------- my aliases
+# alias dummy="echo do nothing"
+alias ls='ls -F'
+alias la='ls -a'
+alias ll='ls -l'
+alias ..='cd ..'
+alias rm='rm -i'
+
+# misc
+alias show-display='echo "export DISPLAY=`hostname`$DISPLAY"'
+
+# printer aliases
+alias lp_dup_short_edge='lp -o Duplex=DuplexTumble'
+alias lp_dup_long_edge='lp -o Duplex=DuplexNoTumble'
+alias lp_dup_no='lp -o Duplex=None'
+

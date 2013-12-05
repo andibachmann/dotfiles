@@ -1,4 +1,68 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env bash
+#
+# dotfiles/install
+#
+# Usage:
+#   cd ~/.dotfiles
+#   ./install -n   to see what would happen
+#
+#
+# 
+#
+usage() {
+  cat <<EOF
+usage $0 [options]
+
+OPTIONS:
+  -h     Show this message
+  -n     Show what this script would do (but don't do it).
+
+EOF
+}
+
+#
+# List of exluded files
+excluded=(README.md LICENSE `basename $0`)
+
+## Parse command line switches
+while getopts "hn" option
+do
+case $option in
+        h)
+            usage
+            exit
+            ;;
+        n)
+            DRY_RUN=1
+            ;;
+        ?)
+            usage
+            exit 1
+             ;;
+    esac
+done
+shift $(($OPTIND -1))
+args=${*}  # remaining args
+
+files=(`dirname $0`/*)
+for file in ${files[@]}; do
+  f_basename=$(basename $file)
+  if [[ "${excluded[@]}" =~ "${f_basename}" ]]; then
+    continue;
+  fi
+  target="${HOME}/.${f_basename}"
+  if [[ -e $target ]]; then
+    if $(diff "${file}" "${target}" > /dev/null) ; then
+      echo "Target ${target} is up-to-date!"
+    else
+      echo "Found un-linked file '${file}'!"
+      # backup and replace with link to dotfiles master
+    fi
+  fi
+done
+
+# If backups are needed, this is where they'll go.
+backup_dir="$HOME/.backups/dotfiles/$(date "+%Y_%m_%d-%H_%M_%S")/"
+backup=
 
 
-# emacs
