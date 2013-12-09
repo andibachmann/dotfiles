@@ -19,3 +19,31 @@ xterm*|rxvt*)
 *)
     ;;
 esac
+
+# ----------------------------------------------------------------
+# git stuff
+# 
+# git-sh-prompt provides the function `__git_ps1`
+F=/usr/lib/git-core/git-sh-prompt; \
+  [ -f $F ] && source $F
+# completion stuff
+F=/usr/share/bash-completion/completions/git; \
+  [ -f $F ] && source $F
+# Configures the git-completion.bash
+GIT_PS1_SHOWDIRTYSTATE=1
+GIT_PS1_SHOWSTASHSTATE=1
+GIT_PS1_SHOWUNTRACKEDFILES=1
+
+# Make the prompt reflect the current git branch
+xa="\[\033[$FGm\]" 
+CC="\[\033[00m\]"      # 
+C1="\[\033[0;32m\]"    # green
+C2="\[\033[0;34m\]"    # cyan
+#C2="\[\033[0;36m\]"    # cyan
+C3="\[\033[0;33m\]"    # yellow
+
+PS1="${C1}\u@\h${CC}:${C2}\w${C3}"
+type -t __git_ps1 > /dev/null && PS1=$PS1'$(__git_ps1 " [%s]")'
+PS1=$PS1"${CC} "
+export PS1
+#
