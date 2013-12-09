@@ -1,0 +1,57 @@
+#------------------------------------------------------------
+# 2013-12-09 GIUZ Bash Startup File                ~/.inputrc
+#
+#------------------------------------------------------------
+
+
+#---------------------------------------- customize your environment here
+# The bash equivalent for the tcsh 'set nobeep' is:
+# either none, audible, visible
+set bell-style none
+
+# The bash equivalent for the tcsh 'set autolist ambiguous' is:
+set show-all-if-ambiguous on
+
+# completion-query-items
+#
+#    The number of possible completions that determines when the user is
+#    asked whether the list of possibilities should be displayed. If the
+#    number of possible completions is greater than this value, Readline
+#    will ask the user whether or not he wishes to view them; otherwise,
+#    they are simply listed. This variable must be set to an integer value
+#    greater than or equal to 0. A negative value means Readline should
+#    never ask (This is only for bash 3.2!). The default limit is 100.
+set completion-query-items 1000000000
+
+# page-completions
+# If set to On, readline uses an internal more-like pager#
+# to  display  a  screenful  of possible completions at a
+# time.
+set page-completions off
+
+# mark-symlinked-directories
+#    If set to 'on', completed names which are symbolic links to directories
+#    have a slash appended (subject to the value of mark-directories). The
+#    default is 'off'.
+#
+set mark-symlinked-directories on
+
+#
+set visible-stats on
+
+# If set to On, readline tries to enable the keyboard's application keypad
+# when it is called. Some systems need this to enable the arrow keys. The
+# default is Off.
+#set enable-keypad on
+# => no effect on sunrays... 20080603
+
+
+# readline keys....
+"\ep": history-search-backward
+"\en": history-search-forward 
+# 
+# the following works, but only partially: When the cursor is in the midst
+# of a command line string C-d should 'delete-character' and no longer 
+# 'complete'. At least that was the thing in tcsh...
+#"\C-d": complete
+
