@@ -8,6 +8,7 @@
 #
 #
 # 
+MY_HOME=/home/bachmann/tmp/tux
 #
 usage() {
   cat <<EOF
@@ -19,6 +20,7 @@ OPTIONS:
 
 EOF
 }
+
 
 #
 # List of exluded files
@@ -44,25 +46,86 @@ done
 shift $(($OPTIND -1))
 args=${*}  # remaining args
 
+# ----------------------------------------------------------- utilities
+info_indent="                  "
+info () {
+  printf "%s\033[00;34m..\033[0m %s\n"  "${info_indent}" "$1"
+}
+
+task () {
+  printf "\033[00;34m * %-12s \033[0m: " $1
+}
+
+success () {
+  printf "[\033[00;32mOK\033[0m] $1\n"
+}
+
+warn () {
+  printf "[\033[0;31mWARN\033[0m] $1\n"
+}
+
+fail () {
+  printf "\033[2K [\033[0;31mFAIL\033[0m] $1\n"
+  echo ''
+  exit
+}
+
+
+# ----------------------------------------------------------- backup
+# backup stuff
+#
+backup_dir=$MY_HOME/.dotfiles_backup
+timestamp=$(date '+%Y%m%d_%H%M%S')
+
+if ! [[ -x "${backup_dir}" ]]; then
+  echo "-> Creating a backup directory for existing dotfiles."
+  mkdir -p ${backup_dir}
+fi
+
+backup() {
+  local old_file=$1
+  local basename=$(basename $old_file)
+  local backup_file="${backup_dir}/${basename#.}-${timestamp}"
+  #
+  info "Looking for backups"
+  local -a bfiles=($(find ${backup_dir} -name "${basename#.}*"))
+  local n=${#bfiles[@]}
+  if [[ $n -gt 0 ]]; then
+    local last_backup=${bfiles[((${n}-1))]}
+    if $(diff "${old_file}" "${last_backup}" > /dev/null); then
+      info "Matches '${last_backup}'"
+      rm ${old_file} && info "=> Removed current file."
+      return 0
+    fi
+  fi
+  mv $old_file $backup_file && \
+    info "Backed up to ${backup_file}."
+}
+
+
+# ------------------------------------------------------------ main
+# main
+#
 files=(`dirname $0`/*)
 for file in ${files[@]}; do
   f_basename=$(basename $file)
   if [[ "${excluded[@]}" =~ "${f_basename}" ]]; then
     continue;
   fi
-  target="${HOME}/.${f_basename}"
-  if [[ -e $target ]]; then
+  target="${MY_HOME}/.${f_basename}"
+  # shortcut for `basename`
+  task "${target##*/}"
+  if [ -e $target ]; then
     if $(diff "${file}" "${target}" > /dev/null) ; then
-      echo "Target ${target} is up-to-date!"
+      success "up-to-date"
+      continue
     else
-      echo "Found un-linked file '${file}'!"
-      # backup and replace with link to dotfiles master
+      warn "Found real file '${file}'!"
+      backup $target
+      printf "$info_indent"
     fi
   fi
+  ln -s $file $target && \
+    success "Installed link to ${file}."
 done
-
-# If backups are needed, this is where they'll go.
-backup_dir="$HOME/.backups/dotfiles/$(date "+%Y_%m_%d-%H_%M_%S")/"
-backup=
-
 
