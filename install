@@ -24,7 +24,7 @@ EOF
 
 #
 # List of exluded files
-excluded=(README.md LICENSE `basename $0`)
+excluded=(README.md LICENSE `basename $0` configuration)
 
 ## Parse command line switches
 while getopts "hn" option
