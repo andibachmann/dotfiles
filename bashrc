@@ -23,7 +23,7 @@ fi
 
 # 
 F=$HOME/.bash/aliases; [ -f $F ] && source $F
-F=$HOME/.bash/completions; [ -f $F ] && source $F
+F=$HOME/.bash/functions; [ -f $F ] && source $F
 F=$HOME/.bash/prompt; [ -f $F ] && source $F
 
 # enable color support of ls and also add handy aliases

@@ -1,4 +1,4 @@
-#
+#!/usr/bin/env bash
 #
 
 # customize your environment here
@@ -17,4 +17,15 @@ alias show-display='echo "export DISPLAY=`hostname`$DISPLAY"'
 alias lp_dup_short_edge='lp -o Duplex=DuplexTumble'
 alias lp_dup_long_edge='lp -o Duplex=DuplexNoTumble'
 alias lp_dup_no='lp -o Duplex=None'
+
+
+#---------------------------------------- my environment variables
+# 
+export HISTCONTROL=ignoredups
+export HISTIGNORE=
+# LESS
+# -X =  don't clear the screen when leaving 'less'
+# -g = hilight search terms
+export LESS=-gX
+
 
